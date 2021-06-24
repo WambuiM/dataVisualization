@@ -15,6 +15,7 @@ df4 <- V4_T2.14
 #data("DataCatalogue")
 library(ggplot2)
 library(dplyr)
+
 #Rename columns
 df_1 <- rename(df1, c(Year = Year, Population = `Population (millions)`))
 
@@ -39,3 +40,4 @@ y = ggplot(df_1) +
 
 #highlight points
 y + geom_point(size = 3, colour = "sienna3")
+
