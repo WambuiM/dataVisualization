@@ -15,13 +15,29 @@ df4 <- V4_T2.14
 #data("DataCatalogue")
 library(ggplot2)
 library(dplyr)
+
+#Rename columns
 df_1 <- rename(df1, c(Year = Year, Population = `Population (millions)`))
 
-p<- ggplot(df_1, aes(Year, lapply(df_1$Population,as.numeric))) +        # Create barchart with ggplot2
-  geom_bar(stat = "identity", fill="sienna3") +
-  #geom_text(df_1, aes(label = as.character(df_1$Year)), vjust=-1) +
+#convert population column to numeric
+df_1 = transform(df_1,Population = as.numeric(Population))
+
+#Check columns class
+sapply(df_1, class)
+
+#Plot a bar plot, add a line 
+y = ggplot(df_1) + 
+  aes(x=Year, y=Population) +
+  geom_bar(stat = "identity", fill="#1b98e0")+
+  geom_line(stat = "identity", group = 1, size=1.5)+
+  geom_text(aes(label = Population, vjust = -1), size = 5) +
   labs(x = "Year",
-       y = "Population(Million)",
+       y = "Population in Million",
        title = "Kenya Population Over The Years") +
-  theme_bw() + theme(panel.grid.major = element_blank())
-p
+  theme_bw() + theme(panel.grid.major = element_blank())+
+  theme(axis.title = element_text(size = 15, color = "sienna3"),
+        plot.title=element_text(size=20, face = "bold", color = "sienna3"))
+
+#highlight points
+y + geom_point(size = 3, colour = "sienna3")
+
